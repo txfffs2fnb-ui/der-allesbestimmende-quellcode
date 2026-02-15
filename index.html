@@ -1,142 +1,261 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Everything Code Dashboard v6.0</title>
+    <title>The Everything Code - Institutional Dashboard v7.0</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <style>
-        body { background-color: #0d1117; color: #c9d1d9; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
-        .card { background-color: #161b22; border: 1px solid #30363d; border-radius: 6px; padding: 1rem; }
-        .metric-value { font-size: 1.5rem; font-weight: bold; color: #58a6ff; }
-        .indicator-green { color: #3fb950; }
-        .indicator-red { color: #f85149; }
-        .indicator-yellow { color: #d29922; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #020617; color: #f1f5f9; overflow-x: hidden; }
+        .glass { background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .active-tab { background: #38bdf8; color: #0f172a; box-shadow: 0 0 20px rgba(56, 189, 248, 0.3); transform: translateY(-2px); }
+        .clock-container { position: relative; width: 220px; height: 220px; }
+        .phase-dot { animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 0.4; transform: scale(1); } 50% { opacity: 1; transform: scale(1.2); } 100% { opacity: 0.4; transform: scale(1); } }
+        .btn-tab { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
     </style>
 </head>
-<body>
-    <div class="max-w-7xl mx-auto p-4">
-        <header class="flex justify-between items-center mb-6 border-b border-gray-700 pb-4">
+<body class="p-4 md:p-10 lg:p-16">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header -->
+        <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 border-b border-slate-800 pb-10">
             <div>
-                <h1 class="text-2xl font-bold">The Everything Code Dashboard</h1>
-                <p class="text-sm text-gray-400">Raoul Pal Macro Framework | Institutional Edition v6.0</p>
+                <h1 class="text-6xl font-black tracking-tighter bg-gradient-to-r from-sky-400 via-indigo-400 to-purple-500 bg-clip-text text-transparent italic">THE EVERYTHING CODE</h1>
+                <p class="text-slate-400 mt-3 text-xl font-medium tracking-tight">Macro Liquidity & Asset Rotation Intelligence • Institutional v7.0</p>
             </div>
-            <div class="text-right">
-                <span class="bg-blue-900 text-blue-100 text-xs font-semibold px-2.5 py-0.5 rounded">LIVE LIQUIDITY CYCLE: EXPANSION</span>
+            <div class="mt-8 md:mt-0 flex flex-col items-end">
+                <span class="text-[10px] text-slate-500 uppercase tracking-[0.3em] font-black mb-2">System Status</span>
+                <span class="px-5 py-2 bg-emerald-500/10 text-emerald-400 rounded-full text-xs font-black border border-emerald-500/20 shadow-[0_0_30px_rgba(16,185,129,0.15)] flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    LIQUIDITY EXPANSION PHASE
+                </span>
             </div>
         </header>
 
-        <!-- KPI Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-            <div class="card">
-                <div class="text-xs text-gray-400 uppercase">Global M2 Growth (RoC)</div>
-                <div class="metric-value">+8.4%</div>
-                <div class="text-xs indicator-green">▲ Accelerating</div>
+        <!-- Top Macro KPIs -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+            <div class="glass p-7 rounded-[2rem] hover:border-sky-500/30 transition-colors">
+                <span class="text-slate-500 text-[10px] uppercase font-black tracking-widest">Global M2 (Liquidity)</span>
+                <div class="text-5xl font-black text-sky-400 mt-3">+8.4%</div>
+                <div class="text-xs text-emerald-400 font-bold mt-3 flex items-center gap-1">↑ ACCELERATING</div>
             </div>
-            <div class="card">
-                <div class="text-xs text-gray-400 uppercase">ISM Manufacturing</div>
-                <div class="metric-value">49.2</div>
-                <div class="text-xs indicator-yellow">● Bottoming (Cycle Turn)</div>
+            <div class="glass p-7 rounded-[2rem]">
+                <span class="text-slate-500 text-[10px] uppercase font-black tracking-widest">ISM Manufacturing</span>
+                <div class="text-5xl font-black text-amber-400 mt-3">49.2</div>
+                <div class="text-xs text-amber-500 font-bold mt-3 uppercase">Cycle Bottoming</div>
             </div>
-            <div class="card">
-                <div class="text-xs text-gray-400 uppercase">Debasement Hurdle</div>
-                <div class="metric-value">14.2%</div>
-                <div class="text-xs indicator-red">▼ Fiat Devaluation High</div>
+            <div class="glass p-7 rounded-[2rem]">
+                <span class="text-slate-500 text-[10px] uppercase font-black tracking-widest">Debasement Hurdle</span>
+                <div class="text-5xl font-black text-rose-500 mt-3">14.2%</div>
+                <div class="text-xs text-rose-400 font-bold mt-3 uppercase">Fiat Devaluation High</div>
             </div>
-            <div class="card">
-                <div class="text-xs text-gray-400 uppercase">BTC Liquidity Corr.</div>
-                <div class="metric-value">0.88</div>
-                <div class="text-xs indicator-green">▲ High Sensitivity</div>
+            <div class="glass p-7 rounded-[2rem]">
+                <span class="text-slate-500 text-[10px] uppercase font-black tracking-widest">BTC Liquidity Corr.</span>
+                <div class="text-5xl font-black text-indigo-400 mt-3">0.88</div>
+                <div class="text-xs text-indigo-400 font-bold mt-3 uppercase">High Sensitivity</div>
             </div>
         </div>
 
-        <!-- Charts & Analysis -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-            <div class="card">
-                <h3 class="text-lg font-semibold mb-4 text-blue-400">Liquidity Cycle Heatmap</h3>
-                <div class="h-64 flex items-center justify-center bg-gray-900 rounded border border-gray-800">
-                    <!-- Placeholder for Heatmap -->
-                    <div class="grid grid-cols-12 gap-1 w-full p-2 h-full">
-                        <!-- Simulated heatmap blocks -->
-                        <div class="bg-red-900 opacity-20"></div><div class="bg-red-900 opacity-40"></div><div class="bg-red-900 opacity-60"></div>
-                        <div class="bg-orange-900 opacity-40"></div><div class="bg-orange-900 opacity-60"></div><div class="bg-yellow-900 opacity-40"></div>
-                        <div class="bg-yellow-900 opacity-60"></div><div class="bg-green-900 opacity-40"></div><div class="bg-green-900 opacity-60"></div>
-                        <div class="bg-green-600"></div><div class="bg-green-500"></div><div class="bg-green-400"></div>
+        <!-- Macro Intelligence Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12">
+            <!-- Left: Improved Liquidity Clock -->
+            <div class="lg:col-span-5 glass p-10 rounded-[3rem] flex flex-col items-center relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-sky-500 to-transparent opacity-30"></div>
+                <h3 class="text-xl font-black mb-10 text-center uppercase tracking-[0.2em] italic">Macro Liquidity Clock</h3>
+                <div class="clock-container">
+                    <svg viewBox="0 0 100 100" class="w-full h-full -rotate-90">
+                        <!-- Background Quadrants -->
+                        <path d="M 50 50 L 50 10 A 40 40 0 0 1 90 50 Z" fill="rgba(16, 185, 129, 0.05)" stroke="rgba(16, 185, 129, 0.2)" stroke-width="0.5" /> <!-- Expansion -->
+                        <path d="M 90 50 A 40 40 0 0 1 50 90 L 50 50 Z" fill="rgba(245, 158, 11, 0.05)" stroke="rgba(245, 158, 11, 0.2)" stroke-width="0.5" /> <!-- Slowdown -->
+                        <path d="M 50 90 A 40 40 0 0 1 10 50 L 50 50 Z" fill="rgba(244, 63, 94, 0.05)" stroke="rgba(244, 63, 94, 0.2)" stroke-width="0.5" /> <!-- Recession -->
+                        <path d="M 10 50 A 40 40 0 0 1 50 10 L 50 50 Z" fill="rgba(99, 102, 241, 0.05)" stroke="rgba(99, 102, 241, 0.2)" stroke-width="0.5" /> <!-- Recovery -->
+                        
+                        <!-- Axis -->
+                        <line x1="10" y1="50" x2="90" y2="50" stroke="rgba(255,255,255,0.1)" stroke-width="0.5" />
+                        <line x1="50" y1="10" x2="50" y2="90" stroke="rgba(255,255,255,0.1)" stroke-width="0.5" />
+
+                        <!-- Indicator Arm -->
+                        <line x1="50" y1="50" x2="82" y2="30" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" shadow="0 0 10px #38bdf8" />
+                        <circle cx="82" cy="30" r="4" fill="#38bdf8" class="phase-dot" />
+                        <circle cx="50" cy="50" r="2" fill="#f1f5f9" />
+                    </svg>
+                    <!-- Labels -->
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-6 text-[10px] font-black text-indigo-400">RECOVERY</div>
+                    <div class="absolute top-1/2 right-0 translate-x-10 -translate-y-1/2 text-[10px] font-black text-emerald-400">EXPANSION</div>
+                    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-6 text-[10px] font-black text-amber-400">SLOWDOWN</div>
+                    <div class="absolute top-1/2 left-0 -translate-x-12 -translate-y-1/2 text-[10px] font-black text-rose-400">RECESSION</div>
+                </div>
+                <div class="mt-12 text-center">
+                    <div class="text-xs font-black text-sky-400 uppercase tracking-widest">Current Status</div>
+                    <p class="text-[11px] text-slate-500 mt-2 max-w-xs mx-auto leading-relaxed">Liquidity is accelerating while growth is bottoming. The "Goldilocks" phase for risk assets and crypto.</p>
+                </div>
+            </div>
+
+            <!-- Right: Rotation Monitor -->
+            <div class="lg:col-span-7 glass p-10 rounded-[3rem] flex flex-col justify-center">
+                <h3 class="text-xl font-black mb-10 flex items-center gap-3 uppercase tracking-widest italic">
+                    <span class="p-2 bg-sky-500/10 rounded-xl text-sky-400 text-lg">🔄</span>
+                    Asset Rotation Monitor
+                </h3>
+                <div class="space-y-12">
+                    <div>
+                        <div class="flex justify-between items-end mb-4">
+                            <div><span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Phase 1</span><h4 class="text-lg font-bold text-slate-400 italic">Cash & Reserves Rotation</h4></div>
+                            <span class="text-slate-500 font-mono text-xs font-bold uppercase">Completed</span>
+                        </div>
+                        <div class="w-full bg-slate-800/50 h-2.5 rounded-full overflow-hidden"><div class="bg-slate-500 h-full w-full opacity-40"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-end mb-4">
+                            <div><span class="text-[10px] font-black text-sky-500 uppercase tracking-widest">Phase 2 (Active)</span><h4 class="text-lg font-bold text-sky-400">Risk Assets & Tech Indices</h4></div>
+                            <span class="text-sky-400 font-mono text-xs font-black animate-pulse">FLOW PEAK ↗</span>
+                        </div>
+                        <div class="w-full bg-slate-800/50 h-2.5 rounded-full overflow-hidden"><div class="bg-sky-500 h-full w-[88%] shadow-[0_0_20px_rgba(56,189,248,0.4)]"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-end mb-4">
+                            <div><span class="text-[10px] font-black text-indigo-400 uppercase tracking-widest">Phase 3 (Next)</span><h4 class="text-lg font-bold text-indigo-300 italic text-glow">Crypto-Beta & Altcoin Squeeze</h4></div>
+                            <span class="text-indigo-400 font-mono text-xs font-bold tracking-tighter">LOADING...</span>
+                        </div>
+                        <div class="w-full bg-slate-800/50 h-2.5 rounded-full overflow-hidden"><div class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-full w-[22%]"></div></div>
+                        <p class="text-[10px] text-indigo-400/60 mt-3 font-bold uppercase italic tracking-tighter">The "Everything Code" Trigger: M2 growth hits altcoins after index re-pricing.</p>
                     </div>
                 </div>
-                <p class="mt-2 text-xs text-gray-500 text-center">Correlation of Global M2 Expansion vs. Risk Asset Performance</p>
             </div>
-            <div class="card">
-                <h3 class="text-lg font-semibold mb-4 text-blue-400">China Credit Impulse vs. FCI</h3>
-                <div class="h-64">
-                    <canvas id="macroChart"></canvas>
+        </div>
+
+        <!-- Asset Selection & Intelligence -->
+        <div class="mb-24">
+            <div class="flex justify-center mb-10 bg-slate-900/60 p-2 rounded-[2rem] w-fit mx-auto border border-slate-800 backdrop-blur-md">
+                <button onclick="switchAsset('xrp')" id="tab-xrp" class="btn-tab px-10 py-3.5 rounded-2xl text-[11px] font-black active-tab uppercase tracking-[0.2em]">XRP</button>
+                <button onclick="switchAsset('eth')" id="tab-eth" class="btn-tab px-10 py-3.5 rounded-2xl text-[11px] font-black text-slate-500 hover:text-slate-300 uppercase tracking-[0.2em]">Ethereum</button>
+                <button onclick="switchAsset('xlm')" id="tab-xlm" class="btn-tab px-10 py-3.5 rounded-2xl text-[11px] font-black text-slate-500 hover:text-slate-300 uppercase tracking-[0.2em]">Stellar</button>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                <!-- Asset Scorecard -->
+                <div class="glass p-10 rounded-[3rem] border-l-8 border-sky-500 relative overflow-hidden">
+                    <div id="asset-accent" class="absolute top-0 right-0 w-32 h-32 bg-sky-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+                    <h2 id="asset-title" class="text-3xl font-black mb-8 text-slate-100 italic uppercase tracking-tight">XRP Strategy Intelligence</h2>
+                    <div class="grid grid-cols-2 gap-6 mb-10">
+                        <div class="bg-slate-900/40 p-6 rounded-3xl border border-slate-800 hover:border-slate-700 transition-colors">
+                            <span class="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">Asset Score</span>
+                            <div id="asset-score" class="text-4xl font-black mt-2 tracking-tighter">78/100</div>
+                        </div>
+                        <div class="bg-slate-900/40 p-6 rounded-3xl border border-slate-800 hover:border-slate-700 transition-colors">
+                            <span class="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">Trend Alpha</span>
+                            <div id="asset-trend" class="text-4xl font-black text-emerald-400 mt-2 tracking-tighter">Strong</div>
+                        </div>
+                    </div>
+                    <div id="catalyst-list" class="space-y-5">
+                        <!-- Dynamic content -->
+                    </div>
+                </div>
+
+                <!-- Asset Scenarios -->
+                <div class="glass p-10 rounded-[3rem]">
+                    <h2 class="text-2xl font-black mb-8 text-slate-100 uppercase tracking-widest italic">Scenario Box</h2>
+                    <div id="scenario-container" class="space-y-5">
+                        <!-- Dynamic content -->
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Scenario Analysis -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-            <div class="card border-green-900/50">
-                <h4 class="text-green-400 font-bold mb-2">Bull Case: "Liquidity Tsunami"</h4>
-                <ul class="text-xs space-y-2 text-gray-400">
-                    <li>• Fed pivots to aggressive easing</li>
-                    <li>• China credit impulse exceeds 30%</li>
-                    <li>• BTC targets $150k+ on debasement</li>
-                </ul>
-            </div>
-            <div class="card border-blue-900/50">
-                <h4 class="text-blue-400 font-bold mb-2">Base Case: "Everything Code"</h4>
-                <ul class="text-xs space-y-2 text-gray-400">
-                    <li>• Steady M2 growth at 6-8%</li>
-                    <li>• Slow recovery in ISM (bottoming)</li>
-                    <li>• Tech/Crypto lead the debasement race</li>
-                </ul>
-            </div>
-            <div class="card border-red-900/50">
-                <h4 class="text-red-400 font-bold mb-2">Bear Case: "Debt Refi Trap"</h4>
-                <ul class="text-xs space-y-2 text-gray-400">
-                    <li>• Sticky inflation prevents rate cuts</li>
-                    <li>• Corporate debt rollover causes shock</li>
-                    <li>• USD strength drains global liquidity</li>
-                </ul>
-            </div>
-        </div>
-
-        <footer class="text-center text-gray-500 text-xs mt-8">
-            <p>© 2024 Macro Liquidity Dashboard | Powered by The Everything Code Analysis</p>
-            <p class="mt-1">"The only way to pay the debt is to debase the currency." - RP</p>
+        <footer class="text-center text-slate-700 text-[10px] font-black uppercase tracking-[0.5em] mt-24 pb-12">
+            Everything Code Protocol • Raoul Pal Thesis • XRP/ETH/XLM Intelligence v7.0
         </footer>
     </div>
 
     <script>
-        const ctx = document.getElementById('macroChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-                datasets: [{
-                    label: 'China Credit Impulse',
-                    data: [12, 19, 3, 5, 2, 30],
-                    borderColor: '#58a6ff',
-                    tension: 0.4
-                }, {
-                    label: 'Financial Conditions (FCI)',
-                    data: [5, 12, 11, 8, 15, 7],
-                    borderColor: '#3fb950',
-                    tension: 0.4
-                }]
+        const ASSET_DATA = {
+            xrp: {
+                title: 'XRP Strategy Intelligence',
+                score: '78/100',
+                trend: 'Strong',
+                catalysts: [
+                    { name: 'Regulatory Clarity (Finality)', status: 'Bullish', detail: 'Final judgment creates institutional moat for Ripple.' },
+                    { name: 'RLUSD Stablecoin Production', status: 'Bullish', detail: 'Direct utility for Ripple-led institutional payment rails.' },
+                    { name: 'SBI Holdings Global Push', status: 'Neutral', detail: 'Network effects expanding rapidly in APAC payment markets.' }
+                ],
+                scenarios: [
+                    { label: 'Bull: "The Liquidity Squeeze"', text: 'M2 expansion hits XRP during the phase 3 altcoin rotation. Target: Historical breakout.', color: 'emerald' },
+                    { label: 'Base: "The Everything Code"', text: 'Steady adoption follows macro liquidity trends. Consistent alpha.', color: 'sky' },
+                    { label: 'Bear: "FCI Tightening Trap"', text: 'Sticky inflation prevents the pivot, draining liquidity from beta assets.', color: 'rose' }
+                ]
             },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: { display: false },
-                    x: { grid: { display: false } }
-                },
-                plugins: { legend: { labels: { color: '#8b949e', font: { size: 10 } } } }
+            eth: {
+                title: 'Ethereum Institutional Beta',
+                score: '84/100',
+                trend: 'Accelerating',
+                catalysts: [
+                    { name: 'ETF Net Flow Momentum', status: 'Bullish', detail: 'Wall Street capital flowing into spot ETH products.' },
+                    { name: 'L2 Scalability Renaissance', status: 'Bullish', detail: 'Dencun upgrade driving massive utility and fee efficiency.' },
+                    { name: 'Institutional Staking Yield', status: 'Positive', detail: 'ETH yield becoming the benchmark risk-free rate for Web3.' }
+                ],
+                scenarios: [
+                    { label: 'Bull: "The Internet Bond"', text: 'ETH captures global debasement as the primary DeFi settlement layer.', color: 'emerald' },
+                    { label: 'Base: "Tech Correlation Plus"', text: 'ETH tracks Nasdaq beta with a significant liquidity-led premium.', color: 'sky' },
+                    { label: 'Bear: "Network Fragmentation"', text: 'Competition from parallel L1s dilutes value if L2 bridging remains complex.', color: 'rose' }
+                ]
+            },
+            xlm: {
+                title: 'Stellar Payment Network',
+                score: '68/100',
+                trend: 'Positive',
+                catalysts: [
+                    { name: 'MoneyGram Remittance Rails', status: 'Bullish', detail: 'XLM-based fiat on-ramps processing significant retail volume.' },
+                    { name: 'Soroban Smart Contract Launch', status: 'Positive', detail: 'New programmability attracting specialized DeFi protocols.' },
+                    { name: 'CBDC Public-Private Pilots', status: 'Neutral', detail: 'Stellar chosen for national digital currency testbeds.' }
+                ],
+                scenarios: [
+                    { label: 'Bull: "Global Remittance Standard"', text: 'XLM becomes the bridge currency for cross-border digital payments.', color: 'emerald' },
+                    { label: 'Base: "Utility Rail Stability"', text: 'Consistent growth in transaction volume from established partners.', color: 'sky' },
+                    { label: 'Bear: "Competitive Moat Erosion"', text: 'Private bank-led ledgers (JPM Coin) limit public rail adoption.', color: 'rose' }
+                ]
             }
-        });
+        };
+
+        function switchAsset(key) {
+            const data = ASSET_DATA[key];
+            
+            document.getElementById('asset-title').innerText = data.title;
+            document.getElementById('asset-score').innerText = data.score;
+            document.getElementById('asset-trend').innerText = data.trend;
+
+            const list = document.getElementById('catalyst-list');
+            list.innerHTML = data.catalysts.map(c => `
+                <div class="flex items-start gap-5 p-6 bg-slate-900/40 rounded-3xl border border-slate-800/40 hover:border-slate-700 transition-all">
+                    <div class="w-1.5 h-12 rounded-full bg-${c.status === 'Bullish' ? 'emerald' : c.status === 'Positive' ? 'sky' : 'amber'}-500 shadow-[0_0_10px_rgba(0,0,0,0.5)]"></div>
+                    <div>
+                        <div class="text-[10px] font-black uppercase text-slate-500 tracking-widest">${c.name}</div>
+                        <div class="text-sm text-slate-300 mt-1 font-medium italic">"${c.detail}"</div>
+                    </div>
+                </div>
+            `).join('');
+
+            const scenarios = document.getElementById('scenario-container');
+            scenarios.innerHTML = data.scenarios.map(s => `
+                <div class="p-8 rounded-[2rem] border border-${s.color}-500/20 bg-${s.color}-500/5 hover:bg-${s.color}-500/10 transition-colors">
+                    <h4 class="text-${s.color}-400 font-black text-xs uppercase italic mb-3 tracking-widest">${s.label}</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed font-medium italic">"${s.text}"</p>
+                </div>
+            `).join('');
+
+            ['xrp', 'eth', 'xlm'].forEach(k => {
+                const btn = document.getElementById(`tab-${k}`);
+                if (k === key) {
+                    btn.classList.add('active-tab');
+                    btn.classList.remove('text-slate-500', 'hover:text-slate-300');
+                } else {
+                    btn.classList.remove('active-tab');
+                    btn.classList.add('text-slate-500', 'hover:text-slate-300');
+                }
+            });
+        }
+
+        switchAsset('xrp');
     </script>
 </body>
 </html>
