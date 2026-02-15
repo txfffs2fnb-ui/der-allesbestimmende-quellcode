@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Everything Code - Institutional v8.0</title>
+    <title>The Everything Code - Institutional v9.0</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
@@ -12,6 +12,8 @@
         .gradient-text { background: linear-gradient(90deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .active-tab { background: #38bdf8; color: #0f172a; font-weight: 800; box-shadow: 0 0 20px rgba(56, 189, 248, 0.4); }
         .rotation-bar { height: 12px; border-radius: 999px; transition: all 0.5s ease-in-out; }
+        .hover-scale { transition: transform 0.2s; }
+        .hover-scale:hover { transform: scale(1.02); }
     </style>
 </head>
 <body class="p-4 md:p-8">
@@ -22,9 +24,9 @@
                 <h1 class="text-4xl font-extrabold gradient-text italic tracking-tighter">Everything Code</h1>
                 <p class="text-slate-400 mt-1 text-sm font-bold uppercase tracking-widest">Global Liquidity & Asset Rotation Monitor</p>
             </div>
-            <div class="mt-6 md:mt-0 flex flex-col items-end">
+            <div class="mt-6 md:mt-0 flex flex-col items-end text-right">
                 <span class="px-4 py-1 bg-sky-500/10 text-sky-400 rounded-full text-[10px] font-black border border-sky-500/20">Market Phase: EXPANSION</span>
-                <p class="text-[9px] text-slate-500 mt-2 uppercase tracking-widest font-bold">Institutional Edition v8.0</p>
+                <p class="text-[9px] text-slate-500 mt-2 uppercase tracking-widest font-bold">Institutional Edition v9.0</p>
             </div>
         </header>
 
@@ -34,7 +36,7 @@
             <button onclick="switchMode('macro')" id="tab-macro" class="px-8 py-2.5 rounded-xl text-xs font-black transition-all text-slate-500 hover:text-slate-300 uppercase tracking-widest">Makro-Lage</button>
         </div>
 
-        <!-- Section 1: Assets (Preferred UI from v3/v5) -->
+        <!-- Section 1: Assets -->
         <div id="section-assets">
             <div class="flex justify-center mb-8 gap-3">
                 <button onclick="switchAsset('xrp')" id="subtab-xrp" class="px-6 py-2 rounded-lg text-[10px] font-black bg-slate-800 text-sky-400 border border-sky-500/30 uppercase">XRP Tracker</button>
@@ -42,11 +44,10 @@
                 <button onclick="switchAsset('xlm')" id="subtab-xlm" class="px-6 py-2 rounded-lg text-[10px] font-black bg-slate-900 text-slate-500 border border-slate-800 uppercase">Stellar</button>
             </div>
 
-            <!-- Liquidity Rotation (The Step UI the user liked) -->
+            <!-- Liquidity Rotation Monitor -->
             <div class="glass-card p-8 rounded-[2rem] mb-12 border-t-2 border-sky-500/30">
                 <h2 class="text-2xl font-black mb-8 flex items-center gap-3">
-                    <span class="p-2 bg-sky-500/20 rounded-lg text-sky-400 text-base">🔄</span>
-                    Liquidity Rotation Monitor
+                    <span class="p-2 bg-sky-500/20 rounded-lg text-sky-400 text-base">🔄</span> Liquidity Rotation Monitor
                 </h2>
                 <div class="space-y-10">
                     <div>
@@ -78,7 +79,7 @@
 
             <!-- Asset Specific Grid -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-                <div class="glass-card p-8 rounded-3xl border-l-8 border-sky-500">
+                <div class="glass-card p-8 rounded-3xl border-l-8 border-sky-500 hover-scale">
                     <h2 id="asset-title" class="text-xl font-black mb-6 flex items-center gap-2 text-slate-200 italic uppercase">🎯 XRP Catalyst Scorecard</h2>
                     <div class="grid grid-cols-2 gap-6 mb-8">
                         <div class="p-5 bg-slate-800/40 rounded-2xl border border-slate-700/50">
@@ -90,16 +91,12 @@
                             <div id="asset-trend" class="text-3xl font-black text-sky-400">High</div>
                         </div>
                     </div>
-                    <ul id="catalyst-list" class="space-y-4">
-                        <!-- Dynamic -->
-                    </ul>
+                    <ul id="catalyst-list" class="space-y-4"></ul>
                 </div>
 
-                <div class="glass-card p-8 rounded-3xl">
+                <div class="glass-card p-8 rounded-3xl hover-scale">
                     <h2 class="text-xl font-black mb-6 text-slate-200 italic uppercase tracking-widest">📊 Scenario Box</h2>
-                    <div id="scenario-list" class="space-y-4">
-                        <!-- Dynamic -->
-                    </div>
+                    <div id="scenario-list" class="space-y-4"></div>
                 </div>
             </div>
         </div>
@@ -144,13 +141,13 @@
                     </div>
                 </div>
                 <div class="mt-10 p-6 bg-slate-900/40 rounded-2xl border border-slate-800">
-                    <p class="text-xs text-slate-500 leading-relaxed italic font-medium">"The Everything Code analysis indicates that debasement remains the primary driver. When M2 growth accelerates alongside a bottoming ISM, risk assets (Phase 2) and subsequently crypto (Phase 3) capture the majority of liquidity flows."</p>
+                    <p class="text-xs text-slate-500 leading-relaxed italic font-medium">The Everything Code analysis indicates that debasement remains the primary driver. When M2 growth accelerates alongside a bottoming ISM, risk assets (Phase 2) and subsequently crypto (Phase 3) capture the maximum liquidity beta.</p>
                 </div>
             </div>
         </div>
 
         <footer class="text-center text-slate-600 text-[9px] font-black uppercase tracking-[0.4em] mt-16 pb-12">
-            Everything Code Protocol • Raoul Pal Framework • Institutional v8.0
+            Everything Code Protocol • Raoul Pal Framework • Institutional v9.0
         </footer>
     </div>
 
@@ -160,6 +157,7 @@
                 title: '🎯 XRP Catalyst Scorecard',
                 score: '78/100',
                 trend: 'High',
+                color: 'sky-500',
                 catalysts: [
                     { name: 'Regulatory Clarity (Finality)', detail: 'Institutional moat established.' },
                     { name: 'RLUSD Stablecoin Integration', detail: 'Production deploy for payment rails.' },
@@ -174,28 +172,28 @@
                 title: '🎯 ETH Catalyst Scorecard',
                 score: '84/100',
                 trend: 'Acc.',
+                color: 'indigo-500',
                 catalysts: [
-                    { name: 'Institutional ETF Flows', detail: 'Wall Street capital entering spot products.' },
-                    { name: 'L2 Scaling Renaissance', detail: 'Utility boom via Dencun efficiency.' },
-                    { name: 'DeFi Yield Benchmark', detail: 'ETH as the risk-free rate of Web3.' }
+                    { name: 'Pectra Upgrade Lead-up', detail: 'Performance and scaling optimizations.' },
+                    { name: 'Institutional Staking Demand', detail: 'ETF inflows driving supply crunch.' }
                 ],
                 scenarios: [
-                    { label: 'Bull: Internet Bond', text: 'ETH captures global debasement as settlement layer.', color: 'emerald' },
-                    { label: 'Base: Tech Beta', text: 'ETH tracks Nasdaq with liquidity premium.', color: 'sky' }
+                    { label: 'Bull: Ultra Sound Money', text: 'Deflationary burn outpaces issuance in peak cycle.', color: 'purple' },
+                    { label: 'Base: Ecosystem Growth', text: 'L2 expansion drives consistent fee revenue.', color: 'indigo' }
                 ]
             },
             xlm: {
                 title: '🎯 XLM Catalyst Scorecard',
-                score: '68/100',
-                trend: 'Positive',
+                score: '72/100',
+                trend: 'Stable',
+                color: 'slate-400',
                 catalysts: [
-                    { name: 'MoneyGram Rails', detail: 'Retail payment volume processing on-chain.' },
-                    { name: 'Soroban Smart Contracts', detail: 'New utility layer for Stellar developers.' },
-                    { name: 'CBDC Pilot Testing', detail: 'Infrastructure chosen for national digital currency.' }
+                    { name: 'Soroban Smart Contracts', detail: 'Full DeFi ecosystem launch phase.' },
+                    { name: 'Cross-Border CBDC Pilots', detail: 'Central Bank partnerships in Latin America.' }
                 ],
                 scenarios: [
-                    { label: 'Bull: Remittance King', text: 'XLM becomes the bridge for cross-border payments.', color: 'emerald' },
-                    { label: 'Base: Utility Stability', text: 'Consistent growth from payment partners.', color: 'sky' }
+                    { label: 'Bull: RWA Dominance', text: 'Stellar becomes the global rail for tokenized assets.', color: 'emerald' },
+                    { label: 'Base: Utility Growth', text: 'Slow but steady increase in transaction volume.', color: 'slate' }
                 ]
             }
         };
@@ -203,45 +201,49 @@
         function switchMode(mode) {
             document.getElementById('section-assets').classList.toggle('hidden', mode !== 'assets');
             document.getElementById('section-macro').classList.toggle('hidden', mode !== 'macro');
-            
             document.getElementById('tab-assets').className = mode === 'assets' ? 'px-8 py-2.5 rounded-xl text-xs font-black transition-all active-tab uppercase tracking-widest' : 'px-8 py-2.5 rounded-xl text-xs font-black transition-all text-slate-500 hover:text-slate-300 uppercase tracking-widest';
             document.getElementById('tab-macro').className = mode === 'macro' ? 'px-8 py-2.5 rounded-xl text-xs font-black transition-all active-tab uppercase tracking-widest' : 'px-8 py-2.5 rounded-xl text-xs font-black transition-all text-slate-500 hover:text-slate-300 uppercase tracking-widest';
         }
 
-        function switchAsset(key) {
-            const data = ASSET_DATA[key];
+        function switchAsset(asset) {
+            const data = ASSET_DATA[asset];
             document.getElementById('asset-title').innerText = data.title;
             document.getElementById('asset-score').innerText = data.score;
             document.getElementById('asset-trend').innerText = data.trend;
+            
+            // Update UI styling for selected asset
+            const borderEl = document.querySelector('#section-assets .glass-card.border-l-8');
+            borderEl.className = `glass-card p-8 rounded-3xl border-l-8 border-${data.color} hover-scale`;
 
-            const catalysts = document.getElementById('catalyst-list');
-            catalysts.innerHTML = data.catalysts.map(c => `
-                <li class="flex items-center gap-3 text-sm font-medium text-slate-300 italic">
-                    <span class="w-1.5 h-1.5 rounded-full bg-sky-500 shadow-[0_0_8px_#38bdf8]"></span>
-                    ${c.name} - <span class="text-[11px] text-slate-500 font-normal">"${c.detail}"</span>
+            // Clear and rebuild lists
+            const catList = document.getElementById('catalyst-list');
+            catList.innerHTML = data.catalysts.map(c => `
+                <li class="p-4 bg-slate-900/50 rounded-xl border border-slate-800/50">
+                    <div class="text-[10px] font-black text-slate-300 uppercase mb-1">${c.name}</div>
+                    <div class="text-xs text-slate-500">${c.detail}</div>
                 </li>
             `).join('');
 
-            const scenarios = document.getElementById('scenario-list');
-            scenarios.innerHTML = data.scenarios.map(s => `
-                <div class="p-4 bg-${s.color}-500/5 border border-${s.color}-500/10 rounded-2xl">
-                    <div class="text-[10px] font-black text-${s.color}-400 uppercase mb-1">${s.label}</div>
-                    <p class="text-[11px] text-slate-400 italic">"${s.text}"</p>
+            const sceList = document.getElementById('scenario-list');
+            sceList.innerHTML = data.scenarios.map(s => `
+                <div class="p-5 border border-${s.color}-500/20 bg-${s.color}-500/5 rounded-2xl">
+                    <div class="text-[9px] font-black text-${s.color}-400 uppercase mb-2 tracking-tighter">${s.label}</div>
+                    <p class="text-[11px] text-slate-300 leading-relaxed font-bold">${s.text}</p>
                 </div>
             `).join('');
 
-            ['xrp', 'eth', 'xlm'].forEach(k => {
-                const btn = document.getElementById(`subtab-${k}`);
-                if (k === key) {
-                    btn.classList.add('bg-slate-800', 'text-sky-400', 'border-sky-500/30');
-                    btn.classList.remove('bg-slate-900', 'text-slate-500', 'border-slate-800');
+            // Subtab styling
+            ['xrp', 'eth', 'xlm'].forEach(id => {
+                const btn = document.getElementById(`subtab-${id}`);
+                if(id === asset) {
+                    btn.className = `px-6 py-2 rounded-lg text-[10px] font-black bg-slate-800 text-${data.color} border border-${data.color}/30 uppercase`;
                 } else {
-                    btn.classList.remove('bg-slate-800', 'text-sky-400', 'border-sky-500/30');
-                    btn.classList.add('bg-slate-900', 'text-slate-500', 'border-slate-800');
+                    btn.className = "px-6 py-2 rounded-lg text-[10px] font-black bg-slate-900 text-slate-500 border border-slate-800 uppercase";
                 }
             });
         }
 
+        // Initialize with XRP
         switchAsset('xrp');
     </script>
 </body>
