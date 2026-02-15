@@ -3,129 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Everything Code - Institutional v9.2</title>
+    <title>The Everything Code - Institutional v9.3</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://unpkg.com/d3-sankey@0.12.3/dist/d3-sankey.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #020617; color: #f1f5f9; margin: 0; }
+        body { font-family: 'Inter', sans-serif; background-color: #020617; color: #f1f5f9; margin: 0; overflow-x: hidden; }
         .glass-card { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
         .gradient-text { background: linear-gradient(90deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .active-tab { background: #38bdf8; color: #0f172a; font-weight: 800; box-shadow: 0 0 20px rgba(56, 189, 248, 0.4); }
-        .hover-scale { transition: transform 0.2s; }
-        .hover-scale:hover { transform: scale(1.01); }
         .node rect { fill-opacity: 0.9; shape-rendering: crispEdges; stroke-width: 0; }
-        .node text { pointer-events: none; font-size: 10px; font-weight: 800; fill: #94a3b8; text-transform: uppercase; }
-        .link { fill: none; stroke: #38bdf8; stroke-opacity: 0.15; transition: stroke-opacity 0.3s; }
-        .link:hover { stroke-opacity: 0.5; }
-        .trend-up { color: #10b981; }
-        .trend-down { color: #ef4444; }
+        .node text { pointer-events: none; font-size: 9px; font-weight: 900; fill: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; }
+        .link { fill: none; stroke-opacity: 0.2; transition: stroke-opacity 0.3s; }
+        .link:hover { stroke-opacity: 0.6; }
+        .label-overlay { font-size: 10px; font-weight: 900; color: #64748b; text-transform: uppercase; letter-spacing: 0.2em; position: absolute; top: 10px; }
     </style>
 </head>
 <body class="p-4 md:p-8">
-    <div class="max-w-6xl mx-auto">
+    <div class="max-w-7xl mx-auto">
         <header class="mb-10 flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-800 pb-8">
             <div>
                 <h1 class="text-4xl font-extrabold gradient-text italic tracking-tighter">Everything Code</h1>
                 <p class="text-slate-400 mt-1 text-sm font-bold uppercase tracking-widest">Global Liquidity & Debt Cycle Monitor</p>
             </div>
             <div class="mt-6 md:mt-0 flex flex-col items-end text-right">
-                <span class="px-4 py-1 bg-sky-500/10 text-sky-400 rounded-full text-[10px] font-black border border-sky-500/20">System Phase: DEBT EXPANSION</span>
-                <p class="text-[9px] text-slate-500 mt-2 uppercase tracking-widest font-bold">Institutional Edition v9.2</p>
+                <span class="px-4 py-1 bg-emerald-500/10 text-emerald-400 rounded-full text-[10px] font-black border border-emerald-500/20 uppercase">Market State: HIGH LIQUIDITY</span>
+                <p class="text-[9px] text-slate-500 mt-2 uppercase tracking-widest font-bold">Institutional Edition v9.3</p>
             </div>
         </header>
 
         <div class="flex justify-center mb-10 bg-slate-900/50 p-1 rounded-2xl w-fit mx-auto border border-slate-800">
-            <button onclick="switchMode('assets')" id="tab-assets" class="px-8 py-2.5 rounded-xl text-xs font-black transition-all text-slate-500 hover:text-slate-300 uppercase tracking-widest">Assets</button>
-            <button onclick="switchMode('macro')" id="tab-macro" class="px-8 py-2.5 rounded-xl text-xs font-black transition-all active-tab uppercase tracking-widest">Makro-Lage</button>
+            <button onclick="location.href='#assets'" class="px-8 py-2.5 rounded-xl text-xs font-black transition-all text-slate-500 hover:text-slate-300 uppercase tracking-widest">Assets</button>
+            <button class="px-8 py-2.5 rounded-xl text-xs font-black transition-all active-tab uppercase tracking-widest">Liquidity Flow</button>
         </div>
 
-        <div id="section-macro" class="">
-            <!-- Macro KPIs -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                <div class="glass-card p-6 rounded-3xl">
-                    <h3 class="text-slate-400 text-[10px] font-black uppercase tracking-widest mb-2">Global M2</h3>
-                    <div class="text-5xl font-black text-sky-400 mb-1">+6.8%</div>
-                    <div class="text-[10px] text-emerald-400 font-bold uppercase tracking-tighter flex items-center gap-1">
-                        <span>↗</span> Trending Up
-                    </div>
-                </div>
-                <div class="glass-card p-6 rounded-3xl">
-                    <h3 class="text-slate-400 text-[10px] font-black uppercase tracking-widest mb-2">ISM Cycle</h3>
-                    <div class="text-5xl font-black text-amber-400 mb-1">48.2</div>
-                    <div class="text-[10px] text-amber-400 font-bold uppercase tracking-tighter flex items-center gap-1">
-                        <span>⟳</span> Bottoming - Pivot Expected
-                    </div>
-                </div>
-                <div class="glass-card p-6 rounded-3xl">
-                    <h3 class="text-slate-400 text-[10px] font-black uppercase tracking-widest mb-2">China Credit</h3>
-                    <div class="text-5xl font-black text-emerald-400 mb-1">HIGH</div>
-                    <div class="text-[10px] text-emerald-400 font-bold uppercase tracking-tighter flex items-center gap-1">
-                        <span>★</span> Leading Global Liquidity
-                    </div>
-                </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            <div class="glass-card p-4 rounded-2xl border-l-4 border-sky-500">
+                <div class="text-[9px] font-bold text-slate-500 mb-1 uppercase">Global Debt</div>
+                <div class="text-xl font-black text-slate-200">$315 Trillion</div>
             </div>
-
-            <!-- Sankey Diagram Card -->
-            <div class="glass-card p-10 rounded-[2.5rem] mb-12 relative overflow-hidden">
-                <div class="flex justify-between items-center mb-10">
-                    <h2 class="text-2xl font-black italic uppercase tracking-widest text-slate-200">Liquidity Flow Engine</h2>
-                    <span class="px-3 py-1 bg-sky-500/20 text-sky-400 text-[9px] font-black rounded-lg border border-sky-500/30 uppercase tracking-tighter italic">Quantified Flow Analysis (Trillions USD)</span>
-                </div>
-                
-                <div id="sankey-container" class="w-full h-[500px]"></div>
-                
-                <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="p-5 bg-slate-900/60 rounded-2xl border border-slate-800">
-                        <div class="text-[10px] font-black text-sky-400 uppercase tracking-widest mb-2">Primary Drivers</div>
-                        <p class="text-[11px] text-slate-400 leading-relaxed">Liquidität fließt primär über Bankreserven und Kredit-Impulse. Sinkende Reverse-Repo Raten befeuern den Risiko-Appetit.</p>
-                    </div>
-                    <div class="p-5 bg-slate-900/60 rounded-2xl border border-slate-800">
-                        <div class="text-[10px] font-black text-emerald-400 uppercase tracking-widest mb-2">Asian Pulse</div>
-                        <p class="text-[11px] text-slate-400 leading-relaxed">China und Rest-Asien agieren als globale Kredit-Motoren. Der Trend zeigt eine deutliche Beschleunigung der Geldmenge.</p>
-                    </div>
-                    <div class="p-5 bg-slate-900/60 rounded-2xl border border-slate-800">
-                        <div class="text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-2">Euro Liquidity</div>
-                        <p class="text-[11px] text-slate-400 leading-relaxed">Europa zeigt eine stabilisierende Tendenz in den Geldströmen, getrieben durch fiskalische Impulse.</p>
-                    </div>
-                </div>
+            <div class="glass-card p-4 rounded-2xl border-l-4 border-emerald-500">
+                <div class="text-[9px] font-bold text-slate-500 mb-1 uppercase">Central Bank Assets</div>
+                <div class="text-xl font-black text-slate-200">$31 Trillion</div>
+            </div>
+            <div class="glass-card p-4 rounded-2xl border-l-4 border-amber-500">
+                <div class="text-[9px] font-bold text-slate-500 mb-1 uppercase">Global M2 Growth</div>
+                <div class="text-xl font-black text-slate-200">+8.4% YoY</div>
+            </div>
+            <div class="glass-card p-4 rounded-2xl border-l-4 border-indigo-500">
+                <div class="text-[9px] font-bold text-slate-500 mb-1 uppercase">Debasement Rate</div>
+                <div class="text-xl font-black text-slate-200">~12% Ave.</div>
             </div>
         </div>
 
-        <div id="section-assets" class="hidden">
-             <!-- Assets Content (Simplified for update) -->
-             <div class="text-center py-20">
-                 <p class="text-slate-500 font-bold uppercase tracking-widest">Asset Rotation View Active</p>
-                 <button onclick="switchMode('macro')" class="mt-4 text-sky-400 text-xs font-black uppercase underline">Back to Macro</button>
-             </div>
+        <div class="glass-card p-8 rounded-[2.5rem] border border-slate-800/50 relative">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+                <div>
+                    <h2 class="text-2xl font-black italic uppercase tracking-tighter text-slate-200">The Liquidity Transmission Mechanism</h2>
+                    <p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest mt-1">From Sovereign Debt Issuance to Financial Asset Appreciation</p>
+                </div>
+                <div class="flex gap-2">
+                     <div class="flex items-center gap-2 px-3 py-1 bg-slate-900 rounded-lg border border-slate-800">
+                        <div class="w-2 h-2 rounded-full bg-sky-500"></div>
+                        <span class="text-[8px] font-black text-slate-400 uppercase">Public Money</span>
+                     </div>
+                     <div class="flex items-center gap-2 px-3 py-1 bg-slate-900 rounded-lg border border-slate-800">
+                        <div class="w-2 h-2 rounded-full bg-indigo-500"></div>
+                        <span class="text-[8px] font-black text-slate-400 uppercase">Private Credit</span>
+                     </div>
+                </div>
+            </div>
+
+            <div class="relative">
+                <div class="flex justify-between w-full px-2 mb-4">
+                    <span class="text-[8px] font-black text-slate-600 uppercase tracking-widest">Sovereign Source</span>
+                    <span class="text-[8px] font-black text-slate-600 uppercase tracking-widest">Central Banks</span>
+                    <span class="text-[8px] font-black text-slate-600 uppercase tracking-widest">Transmission</span>
+                    <span class="text-[8px] font-black text-slate-600 uppercase tracking-widest">Global Assets</span>
+                </div>
+                <div id="sankey-container" class="w-full h-[600px]"></div>
+            </div>
+
+            <div class="mt-10 grid grid-cols-1 lg:grid-cols-3 gap-8 border-t border-slate-800/50 pt-8">
+                <div class="space-y-3">
+                    <h4 class="text-xs font-black text-sky-400 uppercase italic">01. Monetization Phase</h4>
+                    <p class="text-[11px] text-slate-400 leading-relaxed font-medium">Staaten emittieren Schulden, die von Zentralbanken (QE) oder dem privaten Sektor absorbiert werden. Dies ist der "Urknall" der Liquidität.</p>
+                </div>
+                <div class="space-y-3">
+                    <h4 class="text-xs font-black text-indigo-400 uppercase italic">02. Transmission Phase</h4>
+                    <p class="text-[11px] text-slate-400 leading-relaxed font-medium">Zentralbankgeld (Reserves) und Geschäftsbankgeld (M2) fließen durch das System. Sinkende Zinsen und Repo-Operationen beschleunigen den Flow.</p>
+                </div>
+                <div class="space-y-3">
+                    <h4 class="text-xs font-black text-emerald-400 uppercase italic">03. Absorption Phase</h4>
+                    <p class="text-[11px] text-slate-400 leading-relaxed font-medium">Liquidität sucht Rendite. Während Immobilien den Großteil absorbieren, reagieren Aktien und Crypto am sensitivsten auf M2-Veränderungen.</p>
+                </div>
+            </div>
         </div>
 
-        <footer class="text-center text-slate-600 text-[9px] font-black uppercase tracking-[0.4em] mt-16 pb-12">
-            Everything Code Protocol • Global Debt Cycle Framework • Institutional v9.2
+        <footer class="text-center text-slate-700 text-[9px] font-black uppercase tracking-[0.4em] mt-16 pb-12">
+            Everything Code Protocol • Multi-Layer Transmission Model • Institutional v9.3
         </footer>
     </div>
 
     <script>
-        function switchMode(mode) {
-            document.getElementById('section-assets').classList.toggle('hidden', mode !== 'assets');
-            document.getElementById('section-macro').classList.toggle('hidden', mode !== 'macro');
-            
-            document.getElementById('tab-assets').className = mode === 'assets' ? 
-                'px-8 py-2.5 rounded-xl text-xs font-black transition-all active-tab uppercase tracking-widest' : 
-                'px-8 py-2.5 rounded-xl text-xs font-black transition-all text-slate-500 hover:text-slate-300 uppercase tracking-widest';
-            
-            document.getElementById('tab-macro').className = mode === 'macro' ? 
-                'px-8 py-2.5 rounded-xl text-xs font-black transition-all active-tab uppercase tracking-widest' : 
-                'px-8 py-2.5 rounded-xl text-xs font-black transition-all text-slate-500 hover:text-slate-300 uppercase tracking-widest';
-            
-            if(mode === 'macro') renderSankey();
-        }
-
         function renderSankey() {
             const container = document.getElementById('sankey-container');
             container.innerHTML = '';
-            
             const width = container.offsetWidth;
             const height = container.offsetHeight;
             
@@ -134,60 +118,69 @@
                 .attr("height", height);
 
             const sankey = d3.sankey()
-                .nodeWidth(15)
-                .nodePadding(40)
+                .nodeWidth(10)
+                .nodePadding(25)
                 .extent([[1, 1], [width - 1, height - 6]]);
 
-            const data = {
-                nodes: [
-                    { name: "Debt ($110T)", trend: "↗" }, // 0
-                    { name: "USA / FED ($38T)", trend: "↗" }, // 1
-                    { name: "China ($25T)", trend: "↗" }, // 2
-                    { name: "Europe ($18T)", trend: "→" }, // 3
-                    { name: "Japan ($12T)", trend: "↘" }, // 4
-                    { name: "Rest Asia ($17T)", trend: "↗" }, // 5
-                    { name: "Reserves", trend: "↗" }, // 6
-                    { name: "Credit", trend: "↗" }, // 7
-                    { name: "Liquidity", trend: "↗" }, // 8
-                    { name: "Equity", trend: "↗" }, // 9
-                    { name: "Crypto", trend: "↗" }, // 10
-                    { name: "Real Assets", trend: "→" }  // 11
-                ],
-                links: [
-                    { source: 0, target: 1, value: 38 },
-                    { source: 0, target: 2, value: 25 },
-                    { source: 0, target: 3, value: 18 },
-                    { source: 0, target: 4, value: 12 },
-                    { source: 0, target: 5, value: 17 },
-                    { source: 1, target: 6, value: 28 },
-                    { source: 1, target: 8, value: 10 },
-                    { source: 2, target: 7, value: 25 },
-                    { source: 3, target: 7, value: 18 },
-                    { source: 4, target: 6, value: 12 },
-                    { source: 5, target: 7, value: 17 },
-                    { source: 6, target: 8, value: 40 },
-                    { source: 7, target: 8, value: 60 },
-                    { source: 8, target: 9, value: 50 },
-                    { source: 8, target: 10, value: 30 },
-                    { source: 8, target: 11, value: 20 }
-                ]
-            };
+            const nodes = [
+                { name: "Debt Issuance ($315T)" }, // 0
+                { name: "Central Banks" }, // 1
+                { name: "Private Sector" }, // 2
+                { name: "FED Balance Sheet" }, // 3
+                { name: "PBoC / China" }, // 4
+                { name: "ECB / Europe" }, // 5
+                { name: "BoJ / Japan" }, // 6
+                { name: "Bank Reserves" }, // 7
+                { name: "M2 Money Supply" }, // 8
+                { name: "Euro-Dollar System" }, // 9
+                { name: "Real Estate / Land ($320T)" }, // 10
+                { name: "Global Bonds ($130T)" }, // 11
+                { name: "Global Equities ($108T)" }, // 12
+                { name: "Crypto ($2.8T)" } // 13
+            ];
 
-            const graph = sankey(data);
+            // Values are normalized for visual clarity but maintain realistic proportions
+            const links = [
+                { source: 0, target: 1, value: 40 },
+                { source: 0, target: 2, value: 60 },
+                { source: 1, target: 3, value: 12 },
+                { source: 1, target: 4, value: 10 },
+                { source: 1, target: 5, value: 10 },
+                { source: 1, target: 6, value: 8 },
+                { source: 2, target: 8, value: 45 },
+                { source: 2, target: 9, value: 15 },
+                { source: 3, target: 7, value: 12 },
+                { source: 4, target: 8, value: 10 },
+                { source: 5, target: 7, value: 10 },
+                { source: 6, target: 7, value: 8 },
+                { source: 7, target: 12, value: 15 },
+                { source: 7, target: 11, value: 10 },
+                { source: 7, target: 13, value: 1 }, // Crypto is very small
+                { source: 8, target: 10, value: 35 },
+                { source: 8, target: 12, value: 15 },
+                { source: 8, target: 11, value: 5 },
+                { source: 9, target: 12, value: 8 },
+                { source: 9, target: 13, value: 0.5 },
+                { source: 9, target: 11, value: 6.5 }
+            ];
 
-            const colors = {
-                "Debt ($110T)": "#38bdf8",
-                "USA / FED ($38T)": "#60a5fa",
-                "China ($25T)": "#10b981",
-                "Europe ($18T)": "#818cf8",
-                "Japan ($12T)": "#f43f5e",
-                "Rest Asia ($17T)": "#f59e0b",
-                "Reserves": "#94a3b8",
-                "Credit": "#94a3b8",
-                "Liquidity": "#38bdf8",
-                "Equity": "#60a5fa",
-                "Crypto": "#a855f7",
-                "Real Assets": "#f1f5f9"
+            const graph = sankey({ nodes: nodes.map(d => Object.assign({}, d)), links: links.map(d => Object.assign({}, d)) });
+
+            const colorMap = {
+                "Debt Issuance ($315T)": "#38bdf8",
+                "Central Banks": "#0ea5e9",
+                "Private Sector": "#6366f1",
+                "FED Balance Sheet": "#0284c7",
+                "PBoC / China": "#10b981",
+                "ECB / Europe": "#818cf8",
+                "BoJ / Japan": "#f43f5e",
+                "Bank Reserves": "#0ea5e9",
+                "M2 Money Supply": "#6366f1",
+                "Euro-Dollar System": "#4f46e5",
+                "Real Estate / Land ($320T)": "#94a3b8",
+                "Global Bonds ($130T)": "#64748b",
+                "Global Equities ($108T)": "#38bdf8",
+                "Crypto ($2.8T)": "#a855f7"
             };
 
             svg.append("g")
@@ -197,7 +190,7 @@
                 .attr("class", "link")
                 .attr("d", d3.sankeyLinkHorizontal())
                 .attr("stroke-width", d => Math.max(1, d.width))
-                .style("stroke", d => colors[d.source.name] || "#38bdf8");
+                .style("stroke", d => colorMap[d.source.name] || "#38bdf8");
 
             const node = svg.append("g")
                 .selectAll(".node")
@@ -209,16 +202,17 @@
             node.append("rect")
                 .attr("height", d => d.y1 - d.y0)
                 .attr("width", sankey.nodeWidth())
-                .style("fill", d => colors[d.name] || "#38bdf8");
+                .style("fill", d => colorMap[d.name] || "#38bdf8")
+                .style("stroke", "none");
 
             node.append("text")
-                .attr("x", -6)
+                .attr("x", -8)
                 .attr("y", d => (d.y1 - d.y0) / 2)
                 .attr("dy", ".35em")
                 .attr("text-anchor", "end")
-                .text(d => `${d.name} ${d.trend}`)
+                .text(d => d.name)
                 .filter(d => d.x0 < width / 2)
-                .attr("x", 6 + sankey.nodeWidth())
+                .attr("x", 8 + sankey.nodeWidth())
                 .attr("text-anchor", "start");
         }
 
